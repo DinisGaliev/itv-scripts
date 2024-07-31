@@ -1,0 +1,17 @@
+if (Event.SourceType=="TELEMETRY")
+{
+ cam=GetObjectParam("TELEMETRY",Event.SourceId,"cam");
+ pid=Event.GetParam("user_id");
+ person=GetObjectParam("PERSON",pid,"name")+" ";
+ person+=GetObjectParam("PERSON",pid,"surname");
+ DoReactStr("CAM",cam,"ADD_SUBTITLES","command<"+person+"\r>,page<BEGIN>,title_id<"+cam+">");
+ DebugLogString("add title:"+cam+" operator:"+pid);
+ SetTimer(cam,30000);
+}
+
+if(Event.SourceType=="LOCAL_TIMER" && Event.Action=="TRIGGERED")
+{
+ KillTimer(Event.SourceId);
+ cam=Event.SourceId;
+ DoReactStr("CAM",cam,"CLEAR_SUBTITLES","title_id<"+cam+">");
+}
