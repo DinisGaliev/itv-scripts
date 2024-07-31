@@ -1,0 +1,14 @@
+if (Event.SourceType=="TIME_ZONE" && Event.Action=="ACTIVATE" && Event.SourceId=="1")
+{
+DoReactStr("TELEMETRY","4.2","GO_PRESET","preset<1>,tel_prior<4>");
+Sleep(6000);
+d=Event.GetParam("date");
+t=Event.GetParam("time");
+re=/-/g;
+filename=d.replace(re, ".");
+re=/:/g;
+filename+="_"+t.replace(re, ".")+".jpg";
+DoReactGlobalStr("CAM","298","GET_FRAME","path<C:\\SCREEN\\SCREEN_298\\"+filename+">,stream<298.2>");
+DebugLogString("path<C:\\SCREEN\\"+filename);
+DoReactStr("TELEMETRY","4.2","GO_PRESET","preset<2>,tel_prior<4>,delay<5>");
+}
